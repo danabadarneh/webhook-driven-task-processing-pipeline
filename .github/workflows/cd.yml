@@ -8,6 +8,7 @@ on:
 
 jobs:
   Deploy:
+    if: ${{ (secrets.GCP_CREDENTIALS != '' || (secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '')) && secrets.DATABASE_URL != '' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -23,10 +24,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud (Service Account Key)
+        if: ${{ secrets.GCP_CREDENTIALS != '' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Authenticate to Google Cloud (Workload Identity)
+        if: ${{ secrets.GCP_CREDENTIALS == '' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
