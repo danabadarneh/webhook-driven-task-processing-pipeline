@@ -120,16 +120,16 @@ GitHub Actions pipeline runs:
 -----------------------------------------------------------------------
 Create pipeline:
 -----------------------------------------------------------------------
-curl -X POST http://localhost:8080/pipelines \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name":"demo",
-    "action":{"type":"add_metadata"},
-    "subscribers":["https://webhook.site/<REAL-UUID>"]
-  }'
+- `curl -X POST http://localhost:8080/pipelines \`
+- ` -H "Content-Type: application/json" \`
+- `  -d '{ `
+- `   "name":"demo", `
+- `   "action":{"type":"add_metadata"},`
+- `   "subscribers":["https://webhook.site/<REAL-UUID>"] `
+- `  }'`
 -------------------------------------------------------------------------
 Send webhook to sourceUrl :
 -------------------------------------------------------------------------
-curl -X POST http://localhost:8080/webhooks/<webhook_key> \
-  -H "Content-Type: application/json" \
-  -d '{"orderId":"A100","status":"created","note":"hello"}'
+- `curl -X POST http://localhost:8080/webhooks/<webhook_key> \`
+- `  -H "Content-Type: application/json" \`
+- `  -d '{"orderId":"A100","status":"created","note":"hello"}'`
