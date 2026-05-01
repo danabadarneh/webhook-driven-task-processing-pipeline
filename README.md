@@ -111,13 +111,13 @@ GitHub Actions pipeline runs:
 
 #RUN 
 -----------------------------------------------------------------------
-- `cd /Users/danabadarneh/Desktop/webhook-driven-task-processing-pipeline
-cp .env.example .env
-npm install
-npm run build
-docker compose up --build -d
-curl http://localhost:8080/health
-`
+- `cd /Users/danabadarneh/Desktop/webhook-driven-task-processing-pipeline`
+- `cp .env.example .env`
+- `npm install`
+- `npm run build`
+- `docker compose up --build -d`
+- `curl http://localhost:8080/health`
+
 
 -----------------------------------------------------------------------
 Create pipeline:
