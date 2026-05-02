@@ -14,11 +14,65 @@ TypeScript service that receives webhooks, queues background jobs, processes pay
   - applies action types
   - delivers results to subscribers with exponential backoff retries
 
+
+                       ┌───────────────────────────┐
+                     │       Client / User       │
+                     │ (sends webhook requests)  │
+                     └─────────────┬─────────────┘
+                                   │
+                                   ▼
+                     ┌───────────────────────────┐
+                     │        API Server         │
+                     │   (Express - Port 3000)   │
+                     │                           │
+                     │ - Create Pipelines        │
+                     │ - Receive Webhooks        │
+                     │ - Store Jobs in DB        │
+                     └─────────────┬─────────────┘
+                                   │
+                                   ▼
+                     ┌───────────────────────────┐
+                     │        PostgreSQL         │
+                     │         Database          │
+                     │                           │
+                     │ - pipelines               │
+                     │ - jobs                    │
+                     │ - subscribers             │
+                     │ - delivery_attempts       │
+                     └─────────────┬─────────────┘
+                                   │
+                      (polls pending jobs)
+                                   │
+                                   ▼
+                     ┌───────────────────────────┐
+                     │          Worker           │
+                     │     (Background Loop)     │
+                     │                           │
+                     │ - Fetch pending jobs      │
+                     │ - Process data            │
+                     │ - Apply action (e.g. UPPERCASE)
+                     │ - Update job status       │
+                     └─────────────┬─────────────┘
+                                   │
+                                   ▼
+                     ┌───────────────────────────┐
+                     │      Subscribers          │
+                     │ (External Webhook URLs)   │
+                     │                           │
+                     │ - Receive processed data  │
+                     │ - Retry on failure        │
+                     └───────────────────────────┘
+
+
+    
+
 ## Action Types
 
-1. `uppercase`: uppercases all string values in payload recursively
-2. `pick_fields`: keeps only selected fields (`config.fields`)
-3. `add_metadata`: appends processing metadata (`eventId`, `processedAt`)
+1. `uppercase`: uppercases all string values in payload recursively  example : input: {"name":"dana"} => output: {"name":"DANA"}
+2. `pick_fields`: keeps only selected fields (`config.fields`) example : config: {"fields":["name"]}
+input: {"name":"dana","age":25} => output: {"name":"dana"}
+3. `add_metadata`: appends processing metadata (`eventId`, `processedAt`) example : input: {"name":"dana"}
+output: {"name":"dana","eventId":"123","processedAt":"2026-05-02T18:00:00Z"}
 
 ## Data Flow
 
