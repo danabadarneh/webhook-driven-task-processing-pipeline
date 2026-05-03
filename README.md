@@ -13,9 +13,11 @@ TypeScript service that receives webhooks, queues background jobs, processes pay
   - pulls pending jobs
   - applies action types
   - delivers results to subscribers with exponential backoff retries
+    ------------------------------------
+    
 
 
-                       ┌───────────────────────────┐
+                     ┌───────────────────────────┐
                      │       Client / User       │
                      │ (sends webhook requests)  │
                      └─────────────┬─────────────┘
@@ -23,7 +25,7 @@ TypeScript service that receives webhooks, queues background jobs, processes pay
                                    ▼
                      ┌───────────────────────────┐
                      │        API Server         │
-                     │   (Express - Port 3000)   │
+                     │   (Express - Port 8080)   │
                      │                           │
                      │ - Create Pipelines        │
                      │ - Receive Webhooks        │
