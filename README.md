@@ -181,13 +181,13 @@ GitHub Actions pipeline runs:
 - `curl http://localhost:8080/health `
 -  `curl -X POST http://localhost:8080/pipelines \`
 -  `-H "Content-Type: application/json" \`
--  ` -d '{"name":"demo-interview","action":{"type":"add_metadata"},"subscribers":["https://webhook.site/53170d31-bc50-4638-8667-29363384db93"]}'`
+-  ` -d '{"name":"demo-interview","action":{"type":"add_metadata"},"subscribers":["https://webhook.site/af3d6c58-e84a-4a7d-9a51-8267da3059b4"]}'`
 
 
 -------------------------------------------------------------------------
 ## Send webhook to sourceUrl :
 -------------------------------------------------------------------------
-- `curl -X POST http://localhost:8080/webhooks/7558e9c217c7803aa69f73fe \`
+- `curl -X POST http://localhost:8080/webhooks/dc41f92aecc58de6a9e68263\`
 - ` -H "Content-Type: application/json" \`
 - ` -d '{"orderId":"A777","status":"created","note":"final interview run"}'`
 ---------------------------------------------------------------------------
